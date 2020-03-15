@@ -8,12 +8,34 @@ const Statistics = ({ good, neutral, bad }) => {
 
   return (
     <div>
-      <p>Good: {good}</p>
-      <p>Neutral: {neutral}</p>
-      <p>Bad: {bad}</p>
-      <p>All: {total}</p>
-      <p>Average: {average}</p>
-      <p>Positive: {positivePercentage}</p>
+      <table>
+        <tbody>
+          <tr>
+            <td>Good:</td>
+            <td>{good}</td>
+          </tr>
+          <tr>
+            <td>Neutral:</td>
+            <td>{neutral}</td>
+          </tr>
+          <tr>
+            <td>Bad:</td>
+            <td>{bad}</td>
+          </tr>
+          <tr>
+            <td>All:</td>
+            <td>{total}</td>
+          </tr>
+          <tr>
+            <td>Average:</td>
+            <td>{average}</td>
+          </tr>
+          <tr>
+            <td>Positive:</td>
+            <td>{positivePercentage} %</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };
