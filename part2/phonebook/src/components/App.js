@@ -14,7 +14,12 @@ const App = () => {
       name: newName
     };
 
-    setPersons(persons.concat(personObject));
+    if (persons.map(person => person.name).includes(newName)) {
+      alert(`${newName}  is already added to the phonebook`);
+    } else {
+      setPersons(persons.concat(personObject));
+    }
+
     setNewName("");
   };
 
@@ -28,7 +33,6 @@ const App = () => {
         <div>
           <button type="submit">Add</button>
         </div>
-        <div>debug: {newName}</div>
       </form>
       <h2>Numbers</h2>
       <div>
