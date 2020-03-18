@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import ContactForm from "./ContactForm";
 import Persons from "./Persons";
 import SearchField from "./SearchField";
@@ -27,6 +26,13 @@ const App = () => {
 
   const handleNumberChange = event => {
     setNewNumber(event.target.value);
+  };
+
+  const handleDeleteperson = id => {
+    window.confirm(`Delete contact ${id}?`);
+    personService.deletePerson(id).then(() => {
+      setPersons(persons.filter(person => person.id !== id));
+    });
   };
 
   const addContact = event => {
@@ -63,7 +69,11 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
-      <Persons persons={persons} searchName={searchName} />
+      <Persons
+        persons={persons}
+        searchName={searchName}
+        handleDeletePerson={handleDeleteperson}
+      />
     </div>
   );
 };

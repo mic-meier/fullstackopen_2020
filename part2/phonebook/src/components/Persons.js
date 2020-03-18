@@ -10,6 +10,9 @@ const Persons = props => {
         .map(person => (
           <div key={person.name}>
             {person.name} {person.number}
+            <button onClick={() => props.handleDeletePerson(person.id)}>
+              Delete
+            </button>
           </div>
         ))}
     </div>

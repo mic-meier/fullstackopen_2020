@@ -21,14 +21,9 @@
       "id": 4
     },
     {
-      "name": "Bruce Wayne",
-      "number": "77-777-77-77-77",
-      "id": 5
-    },
-    {
       "name": "Clark Kent",
       "number": "88-888-88-88-88",
-      "id": 6
+      "id": 5
     }
   ]
 }
