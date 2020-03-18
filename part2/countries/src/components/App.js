@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import CountryDetails from "./CountryDetails";
+import CountryList from "./CountryList";
 
 const App = () => {
   const [countries, setCountries] = useState([]);
-  const [filteredCountries, setFilteredCountries] = useState([]);
+  const [detailedCountry, setDetailedCountry] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-
-  const handleSearch = e => {
-    setSearchTerm(e.target.value);
-    setFilteredCountries(
-      countries.filter(country =>
-        country.name.toUpperCase().includes(searchTerm.toUpperCase())
-      )
-    );
-  };
+  const [weather, setWeather] = useState(null);
 
   useEffect(() => {
     axios.get("https://restcountries.eu/rest/v2/all").then(res => {
@@ -21,37 +15,45 @@ const App = () => {
     });
   }, []);
 
-  // Handle conditional rendering
-  let display;
+  useEffect(() => {
+    axios
+      .get(
+        `http://api.openweathermap.org/data/2.5/weather?q=${
+          detailedCountry ? detailedCountry[0].capital : "London"
+        }&units=metric&appid=${process.env.REACT_APP_API_KEY}`
+      )
+      .then(res => setWeather(res.data));
+  }, [detailedCountry]);
 
-  if (filteredCountries.length === 1) {
-    display = filteredCountries.map(country => (
-      <div key={country.alpha3Code}>
-        <h2>{country.name}</h2>
-        <div>Capital : {country.capital}</div>
-        <div>Population: {country.population}</div>
-        <h3>Languages:</h3>
-        <ul>
-          {country.languages.map(language => (
-            <li key={language.iso639_2}>{language.name}</li>
-          ))}
-        </ul>
-        <img src={country.flag} width="300px" alt={`Flag of ${country.name}`} />
-      </div>
-    ));
-  } else if (filteredCountries.length >= 10) {
-    display = <div>Too many matches</div>;
-  } else if (filteredCountries.length > 0 && filteredCountries.length < 10) {
-    display = filteredCountries.map(country => (
-      <div key={country.alpha3Code}>{country.name}</div>
-    ));
-  }
+  console.log("weather", weather);
+
+  const handleSearch = e => {
+    const filtered = countries.filter(country =>
+      country.name.toUpperCase().includes(e.target.value.toUpperCase())
+    );
+    if (filtered.length === 1) {
+      setDetailedCountry(filtered);
+    } else {
+      setDetailedCountry(null);
+    }
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredCountries = countries.filter(country =>
+    country.name.toUpperCase().includes(searchTerm.toUpperCase())
+  );
+
+  console.log("filteredCountries", filteredCountries);
 
   return (
     <div>
       Find countries:{" "}
       <input type="text" value={searchTerm} onChange={handleSearch} />
-      {display}
+      {filteredCountries.length === 1 ? (
+        <CountryDetails country={detailedCountry} weather={weather} />
+      ) : (
+        <CountryList countries={filteredCountries} />
+      )}
     </div>
   );
 };
