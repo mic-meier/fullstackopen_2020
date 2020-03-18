@@ -38,11 +38,12 @@ const App = () => {
     if (persons.map(person => person.name).includes(newName)) {
       alert(`${newName}  is already added to the phonebook`);
     } else {
-      setPersons(persons.concat(personObject));
+      axios.post("http://localhost:3001/persons", personObject).then(res => {
+        setPersons(persons.concat(res.data));
+        setNewName("");
+        setNewNumber("");
+      });
     }
-
-    setNewName("");
-    setNewNumber("");
   };
 
   return (
