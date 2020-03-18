@@ -43,7 +43,17 @@ const App = () => {
     };
 
     if (persons.map(person => person.name).includes(newName)) {
-      alert(`${newName}  is already added to the phonebook`);
+      window.confirm(
+        `${newName} is already in your phonebook. Update phone number?`
+      );
+      const id = persons.filter(person => person.name.includes(newName))[0].id;
+      personService.updateNumber(id, personObject).then(returnedPerson => {
+        setPersons(
+          persons.map(person => (person.id !== id ? person : returnedPerson))
+        );
+        setNewName("");
+        setNewNumber("");
+      });
     } else {
       personService.create(personObject).then(returnedPersons => {
         setPersons(persons.concat(returnedPersons));
