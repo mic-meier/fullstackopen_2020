@@ -3,6 +3,7 @@ import axios from "axios";
 import ContactForm from "./ContactForm";
 import Persons from "./Persons";
 import SearchField from "./SearchField";
+import personService from "../services/persons";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,8 +12,8 @@ const App = () => {
   const [searchName, setSearchName] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then(res => {
-      setPersons(res.data);
+    personService.getAll().then(initialPersons => {
+      setPersons(initialPersons);
     });
   }, []);
 
@@ -38,8 +39,8 @@ const App = () => {
     if (persons.map(person => person.name).includes(newName)) {
       alert(`${newName}  is already added to the phonebook`);
     } else {
-      axios.post("http://localhost:3001/persons", personObject).then(res => {
-        setPersons(persons.concat(res.data));
+      personService.create(personObject).then(returnedPersons => {
+        setPersons(persons.concat(returnedPersons));
         setNewName("");
         setNewNumber("");
       });
