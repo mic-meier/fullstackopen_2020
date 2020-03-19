@@ -31,8 +31,8 @@ const App = () => {
     setNewNumber(event.target.value);
   };
 
-  const handleDeleteperson = id => {
-    window.confirm(`Delete contact ${id}?`);
+  const handleDeleteperson = (id, name) => {
+    window.confirm(`Delete contact ${name}?`);
     personService.deletePerson(id).then(() => {
       setPersons(persons.filter(person => person.id !== id));
     });
@@ -50,18 +50,30 @@ const App = () => {
         `${newName} is already in your phonebook. Update phone number?`
       );
       const id = persons.filter(person => person.name.includes(newName))[0].id;
-      personService.updateNumber(id, personObject).then(returnedPerson => {
-        setPersons(
-          persons.map(person => (person.id !== id ? person : returnedPerson))
-        );
-        setNotificationClass("notification");
-        setNotificationMessage(`Contact "${personObject.name}" was updated.`);
-        setTimeout(() => {
-          setNotificationMessage(null);
-        }, 2000);
-        setNewName("");
-        setNewNumber("");
-      });
+      personService
+        .updateNumber(id, personObject)
+        .then(returnedPerson => {
+          setPersons(
+            persons.map(person => (person.id !== id ? person : returnedPerson))
+          );
+          setNotificationClass("notification");
+          setNotificationMessage(`Contact "${personObject.name}" was updated.`);
+          setTimeout(() => {
+            setNotificationMessage(null);
+          }, 2000);
+          setNewName("");
+          setNewNumber("");
+        })
+        .catch(error => {
+          setNotificationClass("error");
+          setNotificationMessage(
+            `Contact ${id} was already deleted from the server`
+          );
+          setTimeout(() => {
+            setNotificationMessage(null);
+          }, 2000);
+          setPersons(persons.filter(person => person.id !== id));
+        });
     } else {
       personService.create(personObject).then(returnedPersons => {
         setPersons(persons.concat(returnedPersons));
