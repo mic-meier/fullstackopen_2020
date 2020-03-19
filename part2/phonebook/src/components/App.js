@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ContactForm from "./ContactForm";
+import Notification from "./Notification";
 import Persons from "./Persons";
 import SearchField from "./SearchField";
 import personService from "../services/persons";
@@ -8,6 +9,8 @@ const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
+  const [notificationClass, setNotificationClass] = useState("notification");
+  const [notificationMessage, setNotificationMessage] = useState(null);
   const [searchName, setSearchName] = useState("");
 
   useEffect(() => {
@@ -51,12 +54,24 @@ const App = () => {
         setPersons(
           persons.map(person => (person.id !== id ? person : returnedPerson))
         );
+        setNotificationClass("notification");
+        setNotificationMessage(`Contact "${personObject.name}" was updated.`);
+        setTimeout(() => {
+          setNotificationMessage(null);
+        }, 2000);
         setNewName("");
         setNewNumber("");
       });
     } else {
       personService.create(personObject).then(returnedPersons => {
         setPersons(persons.concat(returnedPersons));
+        setNotificationClass("notification");
+        setNotificationMessage(
+          `${personObject.name} was added to your contacts.`
+        );
+        setTimeout(() => {
+          setNotificationMessage(null);
+        }, 2000);
         setNewName("");
         setNewNumber("");
       });
@@ -66,6 +81,10 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification
+        notificationClass={notificationClass}
+        notificationMessage={notificationMessage}
+      />
       <SearchField
         searchName={searchName}
         handleSearchNameChange={handleSearchNameChange}

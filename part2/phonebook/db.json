@@ -29,6 +29,16 @@
       "name": "Bruce Wayne",
       "number": "79*77*66*66",
       "id": 6
+    },
+    {
+      "name": "Charles Dickens",
+      "number": "888-77-66-55",
+      "id": 7
+    },
+    {
+      "name": "Charles dickens",
+      "number": "456-77-99-88",
+      "id": 8
     }
   ]
 }
