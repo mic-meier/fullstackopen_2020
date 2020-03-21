@@ -76,7 +76,7 @@ const App = () => {
         });
     } else {
       personService.create(personObject).then(returnedPersons => {
-        setPersons(persons.concat(returnedPersons));
+        setPersons(returnedPersons.map(returnedPerson => returnedPerson));
         setNotificationClass("notification");
         setNotificationMessage(
           `${personObject.name} was added to your contacts.`
