@@ -75,18 +75,29 @@ const App = () => {
           setPersons(persons.filter(person => person.id !== id));
         });
     } else {
-      personService.create(personObject).then(returnedPersons => {
-        setPersons(returnedPersons.map(returnedPerson => returnedPerson));
-        setNotificationClass("notification");
-        setNotificationMessage(
-          `${personObject.name} was added to your contacts.`
-        );
-        setTimeout(() => {
-          setNotificationMessage(null);
-        }, 2000);
-        setNewName("");
-        setNewNumber("");
-      });
+      personService
+        .create(personObject)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson));
+          setNotificationClass("notification");
+          setNotificationMessage(
+            `${personObject.name} was added to your contacts.`
+          );
+          setTimeout(() => {
+            setNotificationMessage(null);
+          }, 2000);
+          setNewName("");
+          setNewNumber("");
+        })
+        .catch(error => {
+          setNotificationClass("error");
+          setNotificationMessage(error.response.data.error);
+          setTimeout(() => {
+            setNotificationMessage(null);
+          }, 2000);
+          setNewName("");
+          setNewNumber("");
+        });
     }
   };
 

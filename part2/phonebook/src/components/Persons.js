@@ -8,7 +8,7 @@ const Persons = props => {
           person.name.toUpperCase().includes(props.searchName.toUpperCase())
         )
         .map(person => (
-          <div key={person.name}>
+          <div key={person.id}>
             {person.name} {person.number}
             <button
               onClick={() => props.handleDeletePerson(person.id, person.name)}
