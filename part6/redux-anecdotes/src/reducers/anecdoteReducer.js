@@ -43,6 +43,7 @@ const reducer = (state = initialState, action) => {
   }
 };
 
+// Action creators
 export const voteOnAnecdote = (id) => {
   return {
     type: "LIKE",
