@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { voteOnAnecdote } from "../reducers/anecdoteReducer";
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector((state) =>
-    state.sort((a, b) => {
+  const anecdotes = useSelector(({ anecdotes }) =>
+    anecdotes.sort((a, b) => {
       if (a.votes > b.votes) {
         return -1;
       }
