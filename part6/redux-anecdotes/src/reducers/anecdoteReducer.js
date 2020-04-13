@@ -35,6 +35,7 @@ export const createAnecdote = (data) => {
     data: {
       content: data.content,
       id: data.id,
+      votes: 0,
     },
   };
 };
