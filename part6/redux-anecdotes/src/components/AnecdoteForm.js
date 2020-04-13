@@ -20,6 +20,7 @@ const AnecdoteForm = () => {
         </div>
         <button>create</button>
       </form>
+      <br />
     </>
   );
 };
