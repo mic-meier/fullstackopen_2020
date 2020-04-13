@@ -9,7 +9,7 @@ const anecdotesAtStart = [
 
 const getId = () => (100000 * Math.random()).toFixed(0);
 
-const asObject = (anecdote) => {
+export const asObject = (anecdote) => {
   return {
     content: anecdote,
     id: getId(),
@@ -34,6 +34,10 @@ const reducer = (state = initialState, action) => {
       return state.map((anecdote) =>
         anecdote.id !== id ? anecdote : likedAnecdote
       );
+    case "CREATE": {
+      const anecdote = asObject(action.data);
+      return [...state, anecdote];
+    }
     default:
       return state;
   }
@@ -43,6 +47,13 @@ export const voteOnAnecdote = (id) => {
   return {
     type: "LIKE",
     data: { id },
+  };
+};
+
+export const createAnecdote = (content) => {
+  return {
+    type: "CREATE",
+    data: content,
   };
 };
 
