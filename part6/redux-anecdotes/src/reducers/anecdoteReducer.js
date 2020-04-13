@@ -49,9 +49,12 @@ export const createAnecdote = (content) => {
 };
 
 export const voteOnAnecdote = (id) => {
-  return {
-    type: "LIKE",
-    data: { id },
+  return async (dispatch) => {
+    const likedAnecdote = await anecdotesService.likeAnecdote(id);
+    dispatch({
+      type: "LIKE",
+      data: likedAnecdote,
+    });
   };
 };
 export default reducer;
