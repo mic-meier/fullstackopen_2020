@@ -34,14 +34,17 @@ export const initializeAnecdotes = () => {
   };
 };
 
-export const createAnecdote = (data) => {
-  return {
-    type: "CREATE",
-    data: {
-      content: data.content,
-      id: data.id,
-      votes: 0,
-    },
+export const createAnecdote = (content) => {
+  return async (dispatch) => {
+    const newAnecdote = await anecdotesService.createNew(content);
+    dispatch({
+      type: "CREATE",
+      data: {
+        content: newAnecdote.content,
+        id: newAnecdote.id,
+        votes: 0,
+      },
+    });
   };
 };
 
