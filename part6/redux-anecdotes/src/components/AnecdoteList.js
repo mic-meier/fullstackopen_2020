@@ -4,7 +4,6 @@ import { voteOnAnecdote } from "../reducers/anecdoteReducer";
 import { setNotification } from "../reducers/notificationReducer";
 
 const AnecdoteList = (props) => {
-  // const filter = useSelector(({ filter }) => filter.searchText);
   const anecdotes = () => {
     return props.anecdotes
       .filter((anecdote) =>
@@ -23,12 +22,9 @@ const AnecdoteList = (props) => {
       });
   };
 
-  // const dispatch = useDispatch();
-
   const vote = (anecdote) => {
-    // dispatch(voteOnAnecdote(anecdote));
-    // dispatch(setNotification(`Voted for anecdote "${anecdote.content}"`, 2));
-    console.log("TODO");
+    props.voteOnAnecdote(anecdote);
+    props.setNotification(`Voted for anecdote "${anecdote.content}"`, 2);
   };
 
   return (
@@ -54,5 +50,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-const ConnectedAnecdoteList = connect(mapStateToProps)(AnecdoteList);
+const ConnectedAnecdoteList = connect(mapStateToProps, {
+  voteOnAnecdote,
+  setNotification,
+})(AnecdoteList);
 export default ConnectedAnecdoteList;
