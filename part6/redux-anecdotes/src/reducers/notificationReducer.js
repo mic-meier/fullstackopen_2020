@@ -15,13 +15,16 @@ const reducer = (state = initialState, action) => {
   }
 };
 
+let id;
+
 export const setNotification = (message, time) => {
   return async (dispatch) => {
+    clearTimeout(id);
     dispatch({
       type: "SHOW_NOTIFICATION",
       message: message,
     });
-    setTimeout(() => {
+    id = setTimeout(() => {
       dispatch({
         type: "HIDE_NOTIFICATION",
       });
