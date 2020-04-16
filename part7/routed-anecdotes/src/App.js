@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useField } from "./useField";
+import { useField } from "./hooks/index";
 import {
   Switch,
   Route,
@@ -89,17 +89,18 @@ const Footer = () => (
 );
 
 const CreateNew = (props) => {
-  const content = useField("text");
-  const author = useField("text");
-  const info = useField("text");
+  const content = useField("text", "content");
+  const author = useField("text", "author");
+  const info = useField("text", "info");
   const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     props.addNew({
-      content,
-      author,
-      info,
+      content: content.value,
+      author: author.value,
+      info: info.value,
       votes: 0,
     });
     history.push("/");
@@ -154,7 +155,7 @@ const App = () => {
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0);
     setAnecdotes(anecdotes.concat(anecdote));
-    setNotification(`Anecdote "anecdote.content" created`);
+    setNotification(`Anecdote ${anecdote.content} created`);
     setTimeout(() => {
       setNotification(null);
     }, 10000);
