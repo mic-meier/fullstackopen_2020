@@ -2,7 +2,6 @@ import { useState } from "react";
 
 export const useField = (type, name) => {
   const [value, setValue] = useState("");
-
   const onChange = (event) => {
     setValue(event.target.value);
   };
@@ -11,11 +10,13 @@ export const useField = (type, name) => {
     setValue("");
   };
 
-  return {
-    type,
-    name,
-    value,
-    onChange,
+  return [
+    {
+      type,
+      name,
+      value,
+      onChange,
+    },
     reset,
-  };
+  ];
 };
