@@ -8,6 +8,37 @@ interface resultsObject {
   average: number;
 }
 
+interface commandLineArguments {
+  value1: number;
+  arr1: Array<number>;
+}
+
+const parseArgs = (args: Array<string>): commandLineArguments => {
+  let value1;
+  let arr1 = [];
+
+  if (args.length < 4) throw new Error("command line argument missing");
+
+  if (!isNaN(Number(args[2]))) {
+    value1 = Number(args[2]);
+  } else {
+    throw new Error("values provided are not numbers");
+  }
+
+  for (let i = 3; i < args.length; i++) {
+    if (!isNaN(Number(args[i]))) {
+      arr1.push(Number(args[i]));
+    } else {
+      throw new Error("values provided are not numbers");
+    }
+  }
+
+  return {
+    value1,
+    arr1,
+  };
+};
+
 const exerciseCalculator = (
   target: number,
   exerciseStats: Array<number>
@@ -48,4 +79,9 @@ const exerciseCalculator = (
   };
 };
 
-console.log(exerciseCalculator(2, [3, 0, 2, 4.5, 0, 3, 1]));
+try {
+  const { value1, arr1 } = parseArgs(process.argv);
+  console.log(exerciseCalculator(value1, arr1));
+} catch (e) {
+  console.log("Error, something bad happened. Usage:", e.message);
+}
