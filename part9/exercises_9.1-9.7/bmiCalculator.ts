@@ -18,7 +18,7 @@ const parseArguments = (args: Array<string>): MultiplyValues => {
   }
 };
 
-const calculateBmi = (height: number, weight: number): string => {
+export const calculateBmi = (height: number, weight: number): string => {
   const bmi = weight / (height / 100) ** 2;
 
   if (bmi <= 15) {
@@ -40,9 +40,9 @@ const calculateBmi = (height: number, weight: number): string => {
   }
 };
 
-try {
-  const { value1, value2 } = parseArguments(process.argv);
-  console.log(calculateBmi(value1, value2));
-} catch (e) {
-  console.log("Something bad happened, message: ", e.message);
-}
+// try {
+//   const { value1, value2 } = parseArguments(process.argv);
+//   console.log(calculateBmi(value1, value2));
+// } catch (e) {
+//   console.log("Something bad happened, message: ", e.message);
+// }
