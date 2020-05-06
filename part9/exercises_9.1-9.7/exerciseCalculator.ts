@@ -1,4 +1,4 @@
-interface resultsObject {
+interface ResultsObject {
   periodLength: number;
   trainingDays: number;
   success: boolean;
@@ -8,14 +8,14 @@ interface resultsObject {
   average: number;
 }
 
-interface commandLineArguments {
+interface CommandLineArguments {
   value1: number;
   arr1: Array<number>;
 }
 
-const parseArgs = (args: Array<string>): commandLineArguments => {
+const parseArgs = (args: Array<string>): CommandLineArguments => {
   let value1;
-  let arr1 = [];
+  const arr1 = [];
 
   if (args.length < 4) throw new Error("command line argument missing");
 
@@ -42,14 +42,14 @@ const parseArgs = (args: Array<string>): commandLineArguments => {
 const exerciseCalculator = (
   target: number,
   exerciseStats: Array<number>
-): resultsObject => {
+): ResultsObject => {
   const periodLength = exerciseStats.length;
   const trainingDays = exerciseStats.filter((hours) => hours > 0).length;
   const average =
     exerciseStats.reduce((acc, curr) => acc + curr) / periodLength;
   const success = average >= target;
-  let rating;
-  let ratingDescription;
+  let rating: number;
+  let ratingDescription: string;
 
   if (target - average > 1) {
     rating = 1;
@@ -62,10 +62,15 @@ const exerciseCalculator = (
   switch (rating) {
     case 3:
       ratingDescription = "Awesome job!";
+      break;
     case 2:
       ratingDescription = "Geting there, nice job!";
+      break;
     case 1:
       ratingDescription = "Come on, you can do much better!";
+      break;
+    default:
+      ratingDescription = "No rating available";
   }
 
   return {
