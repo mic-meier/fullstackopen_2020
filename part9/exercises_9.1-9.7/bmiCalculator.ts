@@ -18,7 +18,7 @@
 //   }
 // };
 
-export const calculateBmi = (height: number, weight: number): string => {
+const calculateBmi = (height: number, weight: number): string => {
   const bmi = weight / (height / 100) ** 2;
 
   if (bmi <= 15) {
@@ -46,3 +46,5 @@ export const calculateBmi = (height: number, weight: number): string => {
 // } catch (e) {
 //   console.log("Something bad happened, message: ", e.message);
 // }
+
+export default calculateBmi;

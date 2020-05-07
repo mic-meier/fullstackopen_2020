@@ -90,3 +90,5 @@ try {
 } catch (e) {
   console.log("Error, something bad happened. Usage:", e.message);
 }
+
+export default exerciseCalculator;
